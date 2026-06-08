@@ -107,7 +107,13 @@ const App = () => {
             if (event.key === 'Enter') lookupWord();
           }}
         />
-        <button className="search-button" type="button" onClick={lookupWord} disabled={isLoading} aria-label="Lookup">
+        <button
+          className="search-button"
+          type="button"
+          onClick={lookupWord}
+          disabled={isLoading}
+          aria-label="Lookup"
+        >
           <svg aria-hidden="true" viewBox="0 0 24 24">
             <circle cx="11" cy="11" r="7" />
             <path d="m16 16 4 4" />

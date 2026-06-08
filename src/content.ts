@@ -37,7 +37,8 @@ const getPanel = () => {
   if (existing) return existing;
 
   const panel = document.createElement(ROOT_TAG);
-  panel.innerHTML = '<div class="etymology-card"><div class="etymology-top"><div class="etymology-word"></div><button class="etymology-close" type="button" aria-label="Close">×</button></div><div class="etymology-body"></div><div class="etymology-actions"><a class="etymology-open" href="#" role="button">Source</a></div></div>';
+  panel.innerHTML =
+    '<div class="etymology-card"><div class="etymology-top"><div class="etymology-word"></div><button class="etymology-close" type="button" aria-label="Close">×</button></div><div class="etymology-body"></div><div class="etymology-actions"><a class="etymology-open" href="#" role="button">Source</a></div></div>';
 
   panel.querySelector('.etymology-close')?.addEventListener('click', () => panel.remove());
   panel.querySelector('.etymology-open')?.addEventListener('click', (event) => {
@@ -97,7 +98,11 @@ const fetchEtymology = (word: string, activeRequestId: number) => {
       if (!panel) return;
 
       if (chrome.runtime.lastError) {
-        setBody(panel, escapeHtml(chrome.runtime.lastError.message || 'Extension request failed.'), 'error');
+        setBody(
+          panel,
+          escapeHtml(chrome.runtime.lastError.message || 'Extension request failed.'),
+          'error',
+        );
         return;
       }
 

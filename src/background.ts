@@ -55,10 +55,12 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
           url: response.url || url,
         };
       })
-      .catch((error): FetchEtymologyHtmlResponse => ({
-        ok: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch Etymonline.',
-      }))
+      .catch(
+        (error): FetchEtymologyHtmlResponse => ({
+          ok: false,
+          error: error instanceof Error ? error.message : 'Failed to fetch Etymonline.',
+        }),
+      )
       .then(sendResponse);
 
     return true;

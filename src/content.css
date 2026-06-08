@@ -39,7 +39,7 @@ etymology-lookup-panel {
   opacity: 1;
   z-index: 2147483647;
   width: min(420px, calc(100vw - 24px));
-  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-family: Georgia, Cambria, 'Times New Roman', serif;
 }
 
 etymology-lookup-panel .etymology-card {
@@ -85,12 +85,12 @@ etymology-lookup-panel .etymology-body {
   line-height: 1.5;
 }
 
-etymology-lookup-panel .etymology-body[data-state="loading"] {
+etymology-lookup-panel .etymology-body[data-state='loading'] {
   color: #715f46;
   font-style: italic;
 }
 
-etymology-lookup-panel .etymology-body[data-state="error"] {
+etymology-lookup-panel .etymology-body[data-state='error'] {
   color: #8c2d20;
 }
 
@@ -123,7 +123,7 @@ etymology-lookup-panel .etymology-entry-content p:last-child {
 
 etymology-lookup-panel .etymology-entry-content a {
   background: transparent;
-  color: #A63951;
+  color: #a63951;
   text-decoration: none;
 }
 

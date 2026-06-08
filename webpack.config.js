@@ -36,9 +36,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({ filename: 'css/[name].css' }),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: resolve('public'), to: resolve('dist') },
-      ],
+      patterns: [{ from: resolve('public'), to: resolve('dist') }],
     }),
     new HtmlWebpackPlugin({
       template: resolve('src/popup/popup.html'),

@@ -2,10 +2,21 @@ body {
   margin: 0;
   background: #fffaf0;
   color: #282115;
-  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-family: Georgia, Cambria, 'Times New Roman', serif;
 }
 
-.options { margin: 48px auto; max-width: 720px; padding: 0 24px; }
-h1 { font-size: 34px; margin: 0 0 12px; }
-p { color: #715f46; font-size: 16px; line-height: 1.6; }
+.options {
+  margin: 48px auto;
+  max-width: 720px;
+  padding: 0 24px;
+}
+h1 {
+  font-size: 34px;
+  margin: 0 0 12px;
+}
+p {
+  color: #715f46;
+  font-size: 16px;
+  line-height: 1.6;
+}
 
