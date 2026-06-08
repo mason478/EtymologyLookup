@@ -82,6 +82,12 @@ input {
   padding-top: 12px;
 }
 
+.result-entry + .result-entry {
+  border-top: 1px solid #eadcc0;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
 .result-title {
   color: #3b2b18;
   font-size: 17px;

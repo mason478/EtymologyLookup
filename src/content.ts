@@ -61,15 +61,20 @@ const fetchEtymology = (word: string, activeRequestId: number) => {
         return;
       }
 
-      const entry = result.data.entries[0];
-      const property = entry.property ? ' ' + entry.property : '';
       setBody(
         panel,
-        '<div class="etymology-entry-title">' +
-          escapeHtml(entry.word + property) +
-          '</div><div class="etymology-entry-content">' +
-          entry.html +
-          '</div>',
+        result.data.entries
+          .map((entry) => {
+            const property = entry.property ? ' ' + entry.property : '';
+            return (
+              '<section class="etymology-entry"><div class="etymology-entry-title">' +
+              escapeHtml(entry.word + property) +
+              '</div><div class="etymology-entry-content">' +
+              entry.html +
+              '</div></section>'
+            );
+          })
+          .join(''),
         'ready',
       );
     },

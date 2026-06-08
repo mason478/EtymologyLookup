@@ -64,7 +64,7 @@ const sanitizeBody = (source: Element): HTMLElement => {
     .querySelectorAll('script, style, template, svg, img, iframe, form, input, button')
     .forEach((element) => element.remove());
 
-  const allowedTags = new Set(['P', 'A', 'EM', 'STRONG', 'I', 'B', 'BR', 'SPAN']);
+  const allowedTags = new Set(['P', 'A', 'EM', 'STRONG', 'I', 'B', 'BR', 'SPAN', 'BLOCKQUOTE']);
   Array.from(container.querySelectorAll('*')).forEach((element) => {
     if (!allowedTags.has(element.tagName)) {
       unwrapElement(element);
@@ -92,16 +92,26 @@ const sanitizeBody = (source: Element): HTMLElement => {
   return container;
 };
 
+const hasBodyParagraph = (element: Element) =>
+  Boolean(element.querySelector('p')) && !element.querySelector('h1, h2');
+
 const findEntryBody = (entryRoot: Element) => {
+  const heading = entryRoot.querySelector('h2');
+  let sibling = heading?.parentElement?.nextElementSibling || null;
+  while (sibling) {
+    if (sibling.tagName === 'SECTION' && hasBodyParagraph(sibling)) {
+      return sibling;
+    }
+    sibling = sibling.nextElementSibling;
+  }
+
   const directBody = Array.from(entryRoot.children).find(
-    (child) => child.tagName === 'SECTION' && child.querySelector('p') && !child.querySelector('h2'),
+    (child) => child.tagName === 'SECTION' && hasBodyParagraph(child),
   );
 
   if (directBody) return directBody;
 
-  return Array.from(entryRoot.querySelectorAll('section')).find(
-    (section) => section.querySelector('p') && !section.querySelector('h2'),
-  );
+  return Array.from(entryRoot.querySelectorAll('section')).find(hasBodyParagraph);
 };
 
 const parseEntry = (entryRoot: Element): EtymonlineEntry | null => {
@@ -154,7 +164,7 @@ export const parseEtymonlineWordHtml = (html: string): EtymonlineParseResult => 
       };
     }
 
-    const entryRoots = Array.from(doc.querySelectorAll('main section[class*="prose"]')).filter(
+    const entryRoots = Array.from(doc.querySelectorAll('section[class*="prose"]')).filter(
       (section) => section.querySelector('h2') && findEntryBody(section),
     );
     const entries = entryRoots

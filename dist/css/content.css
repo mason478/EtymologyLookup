@@ -63,6 +63,12 @@ etymology-lookup-panel .etymology-entry-title {
   margin-bottom: 8px;
 }
 
+etymology-lookup-panel .etymology-entry + .etymology-entry {
+  border-top: 1px solid #eadcc0;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
 etymology-lookup-panel .etymology-entry-content p {
   margin: 0 0 10px;
 }

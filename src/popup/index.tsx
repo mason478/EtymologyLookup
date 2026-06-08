@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { parseEtymonlineWordHtml } from '../model/etymonlineParser';
+import { EtymonlineEntry, parseEtymonlineWordHtml } from '../model/etymonlineParser';
 import { FetchEtymologyHtmlResponse, MessageType, PingResponse } from '../types';
 import './popup.css';
 
 const App = () => {
   const [word, setWord] = useState('flower');
   const [status, setStatus] = useState('Checking extension...');
-  const [entryHtml, setEntryHtml] = useState('');
-  const [entryTitle, setEntryTitle] = useState('');
+  const [entries, setEntries] = useState<EtymonlineEntry[]>([]);
   const [sourceUrl, setSourceUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -26,8 +25,7 @@ const App = () => {
     }
 
     setIsLoading(true);
-    setEntryHtml('');
-    setEntryTitle('');
+    setEntries([]);
     setSourceUrl('');
     setStatus('Loading etymology...');
 
@@ -52,9 +50,7 @@ const App = () => {
           return;
         }
 
-        const entry = result.data.entries[0];
-        setEntryTitle(entry.word + (entry.property ? ' ' + entry.property : ''));
-        setEntryHtml(entry.html);
+        setEntries(result.data.entries);
         setSourceUrl(result.data.canonicalUrl || response.url);
         setStatus('Loaded from Etymonline.');
       },
@@ -81,14 +77,21 @@ const App = () => {
         {isLoading ? 'Loading...' : 'Lookup'}
       </button>
       <p className="status">{status}</p>
-      {entryHtml && (
+      {entries.length > 0 && (
         <article className="result">
-          <header className="result-title">{entryTitle}</header>
-          <section
-            className="result-body"
-            // Parser sanitizes Etymonline body HTML before it reaches this render point.
-            dangerouslySetInnerHTML={{ __html: entryHtml }}
-          />
+          {entries.map((entry, index) => (
+            <section className="result-entry" key={`${entry.word}-${entry.property}-${index}`}>
+              <header className="result-title">
+                {entry.word}
+                {entry.property ? ` ${entry.property}` : ''}
+              </header>
+              <div
+                className="result-body"
+                // Parser sanitizes Etymonline body HTML before it reaches this render point.
+                dangerouslySetInnerHTML={{ __html: entry.html }}
+              />
+            </section>
+          ))}
           {sourceUrl && (
             <a className="source" href={sourceUrl} target="_blank" rel="noreferrer">
               Source
