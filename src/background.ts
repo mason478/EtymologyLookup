@@ -1,4 +1,7 @@
-import { MessageType, PingResponse } from './types';
+import { FetchEtymologyHtmlResponse, MessageType, PingResponse } from './types';
+
+const buildEtymonlineUrl = (word: string) =>
+  'https://www.etymonline.com/word/' + encodeURIComponent(word.trim());
 
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -25,10 +28,40 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   }
 
   if (message?.type === MessageType.OpenEtymonline && message.word) {
-    const word = encodeURIComponent(String(message.word).trim());
-    chrome.tabs.create({ url: 'https://www.etymonline.com/word/' + word });
+    chrome.tabs.create({ url: buildEtymonlineUrl(String(message.word)) });
     sendResponse({ ok: true });
     return false;
+  }
+
+  if (message?.type === MessageType.FetchEtymologyHtml && message.word) {
+    const url = buildEtymonlineUrl(String(message.word));
+    fetch(url, {
+      credentials: 'omit',
+      headers: {
+        accept: 'text/html,application/xhtml+xml',
+      },
+    })
+      .then(async (response): Promise<FetchEtymologyHtmlResponse> => {
+        if (!response.ok) {
+          return {
+            ok: false,
+            error: 'Etymonline returned HTTP ' + response.status + '.',
+          };
+        }
+
+        return {
+          ok: true,
+          html: await response.text(),
+          url: response.url || url,
+        };
+      })
+      .catch((error): FetchEtymologyHtmlResponse => ({
+        ok: false,
+        error: error instanceof Error ? error.message : 'Failed to fetch Etymonline.',
+      }))
+      .then(sendResponse);
+
+    return true;
   }
 
   return false;
