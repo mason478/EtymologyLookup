@@ -30,6 +30,12 @@
       "run_at": "document_idle"
     }
   ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/logo.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "options_page": "options.html",
   "permissions": ["storage", "contextMenus"],
   "host_permissions": ["https://www.etymonline.com/*"]

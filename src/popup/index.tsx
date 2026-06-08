@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { EtymonlineEntry, parseEtymonlineWordHtml } from '../model/etymonlineParser';
+import { DEFAULT_SETTINGS, SELECTION_LOOKUP_ENABLED_KEY } from '../settings';
 import { FetchEtymologyHtmlResponse, MessageType, PingResponse } from '../types';
 import './popup.css';
 
@@ -11,13 +12,25 @@ const App = () => {
   const [entries, setEntries] = useState<EtymonlineEntry[]>([]);
   const [sourceUrl, setSourceUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelectionLookupEnabled, setIsSelectionLookupEnabled] = useState(
+    DEFAULT_SETTINGS[SELECTION_LOOKUP_ENABLED_KEY],
+  );
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: MessageType.Ping }, (response: PingResponse) => {
       setStatus(response?.ok ? '' : 'Extension is not responding');
       setStatusKind('default');
     });
+
+    chrome.storage.local.get(DEFAULT_SETTINGS, (settings) => {
+      setIsSelectionLookupEnabled(Boolean(settings[SELECTION_LOOKUP_ENABLED_KEY]));
+    });
   }, []);
+
+  const setSelectionLookupEnabled = (enabled: boolean) => {
+    setIsSelectionLookupEnabled(enabled);
+    chrome.storage.local.set({ [SELECTION_LOOKUP_ENABLED_KEY]: enabled });
+  };
 
   const lookupWord = () => {
     const normalizedWord = word.trim();
@@ -75,8 +88,16 @@ const App = () => {
             Etymonline.
           </a>
         </p>
+        <label className="selection-toggle">
+          <input
+            type="checkbox"
+            checked={isSelectionLookupEnabled}
+            onChange={(event) => setSelectionLookupEnabled(event.target.checked)}
+          />
+          <span>Look up selected words</span>
+        </label>
       </section>
-      <label className="field">
+      <label className="search-control">
         <input
           placeholder="Enter a word (e.g., flower)..."
           value={word}
@@ -85,10 +106,13 @@ const App = () => {
             if (event.key === 'Enter') lookupWord();
           }}
         />
+        <button className="search-button" type="button" onClick={lookupWord} disabled={isLoading} aria-label="Lookup">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m16 16 4 4" />
+          </svg>
+        </button>
       </label>
-      <button className="primary" type="button" onClick={lookupWord} disabled={isLoading}>
-        {isLoading ? 'Loading...' : 'Lookup'}
-      </button>
       {(status || statusKind === 'loaded') && (
         <p className="status">
           {status}
