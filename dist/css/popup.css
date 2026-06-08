@@ -41,6 +41,19 @@ body {
   text-transform: uppercase;
 }
 
+.tagline {
+  color: #715f46;
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.tagline a {
+  color: #A63951;
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .field { display: grid; font-size: 13px; margin-bottom: 12px; }
 
 input {
@@ -84,8 +97,7 @@ input::placeholder {
 .status a {
   color: #A63951;
   font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: none;
 }
 
 .result {
@@ -95,6 +107,27 @@ input::placeholder {
   min-height: 0;
   overflow-y: auto;
   padding-top: 12px;
+}
+
+.result-heading {
+  color: #4a4742;
+  font-family: Georgia, Cambria, "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+
+.result-heading span {
+  font-style: italic;
+}
+
+.result-card {
+  background: #fff;
+  border: 1px solid #f0eadf;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 14px;
 }
 
 .result-entry + .result-entry {
@@ -124,9 +157,8 @@ input::placeholder {
 }
 
 .result-body a {
-  color: #7b4f22;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  color: #A63951;
+  text-decoration: none;
 }
 
 .result-body blockquote {
@@ -157,5 +189,6 @@ input::placeholder {
   display: inline-flex;
   font-size: 12px;
   margin-top: 10px;
+  text-decoration: none;
 }
 

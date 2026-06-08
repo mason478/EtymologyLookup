@@ -78,9 +78,8 @@ etymology-lookup-panel .etymology-entry-content p:last-child {
 }
 
 etymology-lookup-panel .etymology-entry-content a {
-  color: #7b4f22;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  color: #A63951;
+  text-decoration: none;
 }
 
 etymology-lookup-panel .etymology-entry-content blockquote {
@@ -120,5 +119,6 @@ etymology-lookup-panel .etymology-open {
   cursor: pointer;
   font-size: 13px;
   padding: 6px 10px;
+  text-decoration: none;
 }
 

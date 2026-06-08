@@ -6,7 +6,7 @@ import './popup.css';
 
 const App = () => {
   const [word, setWord] = useState('');
-  const [status, setStatus] = useState('Checking extension...');
+  const [status, setStatus] = useState('');
   const [statusKind, setStatusKind] = useState<'default' | 'loaded'>('default');
   const [entries, setEntries] = useState<EtymonlineEntry[]>([]);
   const [sourceUrl, setSourceUrl] = useState('');
@@ -14,7 +14,7 @@ const App = () => {
 
   useEffect(() => {
     chrome.runtime.sendMessage({ type: MessageType.Ping }, (response: PingResponse) => {
-      setStatus(response?.ok ? 'Manifest v' + response.manifestVersion + ' is running' : 'Extension is not responding');
+      setStatus(response?.ok ? '' : 'Extension is not responding');
       setStatusKind('default');
     });
   }, []);
@@ -69,6 +69,12 @@ const App = () => {
     <main className="popup">
       <section className="masthead">
         <p className="eyebrow">Etymology Lookup</p>
+        <p className="tagline">
+          Search word origin and histories via{' '}
+          <a href="https://www.etymonline.com/" target="_blank" rel="noreferrer">
+            Etymonline.
+          </a>
+        </p>
       </section>
       <label className="field">
         <input
@@ -83,35 +89,42 @@ const App = () => {
       <button className="primary" type="button" onClick={lookupWord} disabled={isLoading}>
         {isLoading ? 'Loading...' : 'Lookup'}
       </button>
-      <p className="status">
-        {status}
-        {statusKind === 'loaded' && (
-          <a href="https://www.etymonline.com/" target="_blank" rel="noreferrer">
-            Etymonline
-          </a>
-        )}
-        {statusKind === 'loaded' ? '.' : ''}
-      </p>
-      {entries.length > 0 && (
-        <article className="result">
-          {entries.map((entry, index) => (
-            <section className="result-entry" key={`${entry.word}-${entry.property}-${index}`}>
-              <header className="result-title">
-                {entry.word}
-                {entry.property ? ` ${entry.property}` : ''}
-              </header>
-              <div
-                className="result-body"
-                // Parser sanitizes Etymonline body HTML before it reaches this render point.
-                dangerouslySetInnerHTML={{ __html: entry.html }}
-              />
-            </section>
-          ))}
-          {sourceUrl && (
-            <a className="source" href={sourceUrl} target="_blank" rel="noreferrer">
-              Source
+      {(status || statusKind === 'loaded') && (
+        <p className="status">
+          {status}
+          {statusKind === 'loaded' && (
+            <a href="https://www.etymonline.com/" target="_blank" rel="noreferrer">
+              Etymonline
             </a>
           )}
+          {statusKind === 'loaded' ? '.' : ''}
+        </p>
+      )}
+      {entries.length > 0 && (
+        <article className="result">
+          <h2 className="result-heading">
+            Origin and history of <span>{entries[0].word}</span>
+          </h2>
+          <div className="result-card">
+            {entries.map((entry, index) => (
+              <section className="result-entry" key={`${entry.word}-${entry.property}-${index}`}>
+                <header className="result-title">
+                  {entry.word}
+                  {entry.property ? ` ${entry.property}` : ''}
+                </header>
+                <div
+                  className="result-body"
+                  // Parser sanitizes Etymonline body HTML before it reaches this render point.
+                  dangerouslySetInnerHTML={{ __html: entry.html }}
+                />
+              </section>
+            ))}
+            {sourceUrl && (
+              <a className="source" href={sourceUrl} target="_blank" rel="noreferrer">
+                Source
+              </a>
+            )}
+          </div>
         </article>
       )}
     </main>
