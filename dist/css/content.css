@@ -83,6 +83,23 @@ etymology-lookup-panel .etymology-entry-content a {
   text-underline-offset: 2px;
 }
 
+etymology-lookup-panel .etymology-entry-content blockquote {
+  border-left: 4px solid #e8dcc4;
+  color: #7c776f;
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 16px 0;
+  padding: 2px 0 2px 14px;
+}
+
+etymology-lookup-panel .etymology-entry-content blockquote p {
+  margin-bottom: 8px;
+}
+
+etymology-lookup-panel .etymology-entry-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
 etymology-lookup-panel .etymology-entry-content i,
 etymology-lookup-panel .etymology-entry-content em {
   background: #f2e5c7;

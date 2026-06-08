@@ -5,8 +5,9 @@ import { FetchEtymologyHtmlResponse, MessageType, PingResponse } from '../types'
 import './popup.css';
 
 const App = () => {
-  const [word, setWord] = useState('flower');
+  const [word, setWord] = useState('');
   const [status, setStatus] = useState('Checking extension...');
+  const [statusKind, setStatusKind] = useState<'default' | 'loaded'>('default');
   const [entries, setEntries] = useState<EtymonlineEntry[]>([]);
   const [sourceUrl, setSourceUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ const App = () => {
   useEffect(() => {
     chrome.runtime.sendMessage({ type: MessageType.Ping }, (response: PingResponse) => {
       setStatus(response?.ok ? 'Manifest v' + response.manifestVersion + ' is running' : 'Extension is not responding');
+      setStatusKind('default');
     });
   }, []);
 
@@ -21,6 +23,7 @@ const App = () => {
     const normalizedWord = word.trim();
     if (!normalizedWord) {
       setStatus('Enter a word first.');
+      setStatusKind('default');
       return;
     }
 
@@ -28,6 +31,7 @@ const App = () => {
     setEntries([]);
     setSourceUrl('');
     setStatus('Loading etymology...');
+    setStatusKind('default');
 
     chrome.runtime.sendMessage(
       { type: MessageType.FetchEtymologyHtml, word: normalizedWord },
@@ -36,23 +40,27 @@ const App = () => {
 
         if (chrome.runtime.lastError) {
           setStatus(chrome.runtime.lastError.message || 'Extension request failed.');
+          setStatusKind('default');
           return;
         }
 
         if (!response?.ok) {
           setStatus(response?.error || 'Failed to load etymology.');
+          setStatusKind('default');
           return;
         }
 
         const result = parseEtymonlineWordHtml(response.html);
         if (!result.ok) {
           setStatus(result.error.message);
+          setStatusKind('default');
           return;
         }
 
         setEntries(result.data.entries);
         setSourceUrl(result.data.canonicalUrl || response.url);
-        setStatus('Loaded from Etymonline.');
+        setStatus('Loaded from ');
+        setStatusKind('loaded');
       },
     );
   };
@@ -61,11 +69,10 @@ const App = () => {
     <main className="popup">
       <section className="masthead">
         <p className="eyebrow">Etymology Lookup</p>
-        <h1>Word origins, one click away.</h1>
       </section>
       <label className="field">
-        <span>Word</span>
         <input
+          placeholder="Enter a word (e.g., flower)..."
           value={word}
           onChange={(event) => setWord(event.target.value)}
           onKeyDown={(event) => {
@@ -76,7 +83,15 @@ const App = () => {
       <button className="primary" type="button" onClick={lookupWord} disabled={isLoading}>
         {isLoading ? 'Loading...' : 'Lookup'}
       </button>
-      <p className="status">{status}</p>
+      <p className="status">
+        {status}
+        {statusKind === 'loaded' && (
+          <a href="https://www.etymonline.com/" target="_blank" rel="noreferrer">
+            Etymonline
+          </a>
+        )}
+        {statusKind === 'loaded' ? '.' : ''}
+      </p>
       {entries.length > 0 && (
         <article className="result">
           {entries.map((entry, index) => (
