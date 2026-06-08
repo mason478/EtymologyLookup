@@ -119,6 +119,7 @@ input::placeholder {
 }
 
 .result-heading span {
+  margin-left: 4px;
   font-style: italic;
 }
 

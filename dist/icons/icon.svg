@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Etymology Lookup">
+  <rect width="128" height="128" fill="#9f2439"/>
+  <text
+    x="64"
+    y="103"
+    fill="#fffaf0"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="104"
+    font-weight="700"
+    text-anchor="middle"
+  >E</text>
+  <circle cx="62" cy="70" r="19" fill="none" stroke="#fffaf0" stroke-width="9"/>
+  <path d="M78 86l24 24" stroke="#fffaf0" stroke-width="12" stroke-linecap="round"/>
+  <path d="M52 68c2-7 8-12 16-13" stroke="#fffaf0" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+</svg>
