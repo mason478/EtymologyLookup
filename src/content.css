@@ -1,0 +1,62 @@
+etymology-lookup-panel {
+  position: absolute;
+  z-index: 2147483647;
+  width: min(360px, calc(100vw - 24px));
+  font-family: Georgia, Cambria, "Times New Roman", serif;
+}
+
+etymology-lookup-panel .etymology-card {
+  border: 1px solid #d7c7aa;
+  border-radius: 8px;
+  background: #fffdf7;
+  box-shadow: 0 14px 36px rgba(36, 28, 12, 0.18);
+  color: #2f281d;
+  overflow: hidden;
+}
+
+etymology-lookup-panel .etymology-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #eadcc0;
+  background: #f7ecd2;
+}
+
+etymology-lookup-panel .etymology-word {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+etymology-lookup-panel .etymology-close {
+  border: 0;
+  background: transparent;
+  color: #705632;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+}
+
+etymology-lookup-panel .etymology-body {
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+etymology-lookup-panel .etymology-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 12px 12px;
+}
+
+etymology-lookup-panel .etymology-open {
+  border: 1px solid #7b4f22;
+  border-radius: 6px;
+  background: #7b4f22;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  padding: 6px 10px;
+}

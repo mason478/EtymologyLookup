@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Etymology Lookup",
+  "version": "0.1.0",
+  "description": "Look up word origins from the browser.",
+  "action": {
+    "default_title": "Etymology Lookup",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"],
+      "css": ["css/content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "permissions": ["storage", "contextMenus"],
+  "host_permissions": ["https://www.etymonline.com/*"]
+}
