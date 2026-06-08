@@ -1,4 +1,5 @@
 import { parseEtymonlineWordHtml } from './model/etymonlineParser';
+import { escapeHtml, renderEtymologyEntries } from './renderEtymologyEntries';
 import { DEFAULT_SETTINGS, SELECTION_LOOKUP_ENABLED_KEY } from './settings';
 import { FetchEtymologyHtmlResponse, MessageType } from './types';
 import './content.css';
@@ -30,13 +31,6 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
     document.querySelector(ROOT_TAG)?.remove();
   }
 });
-
-const escapeHtml = (value: string) => value
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&#39;');
 
 const getPanel = () => {
   const existing = document.querySelector<HTMLElement>(ROOT_TAG);
@@ -118,22 +112,7 @@ const fetchEtymology = (word: string, activeRequestId: number) => {
         return;
       }
 
-      setBody(
-        panel,
-        result.data.entries
-          .map((entry) => {
-            const property = entry.property ? ' ' + entry.property : '';
-            return (
-              '<section class="etymology-entry"><div class="etymology-entry-title">' +
-              escapeHtml(entry.word + property) +
-              '</div><div class="etymology-entry-content">' +
-              entry.html +
-              '</div></section>'
-            );
-          })
-          .join(''),
-        'ready',
-      );
+      setBody(panel, renderEtymologyEntries(result.data.entries), 'ready');
     },
   );
 };

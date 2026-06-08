@@ -64,7 +64,7 @@ const sanitizeBody = (source: Element): HTMLElement => {
     .querySelectorAll('script, style, template, svg, img, iframe, form, input, button')
     .forEach((element) => element.remove());
 
-  const allowedTags = new Set(['P', 'A', 'EM', 'STRONG', 'I', 'B', 'BR', 'SPAN', 'BLOCKQUOTE']);
+  const allowedTags = new Set(['P', 'A', 'EM', 'STRONG', 'I', 'B', 'BR', 'BLOCKQUOTE']);
   Array.from(container.querySelectorAll('*')).forEach((element) => {
     if (!allowedTags.has(element.tagName)) {
       unwrapElement(element);

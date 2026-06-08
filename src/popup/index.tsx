@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { EtymonlineEntry, parseEtymonlineWordHtml } from '../model/etymonlineParser';
+import { renderEtymologyEntries } from '../renderEtymologyEntries';
 import { DEFAULT_SETTINGS, SELECTION_LOOKUP_ENABLED_KEY } from '../settings';
 import { FetchEtymologyHtmlResponse, MessageType, PingResponse } from '../types';
 import './popup.css';
@@ -130,19 +131,10 @@ const App = () => {
             Origin and history of <span>{entries[0].word}</span>
           </h2>
           <div className="result-card">
-            {entries.map((entry, index) => (
-              <section className="result-entry" key={`${entry.word}-${entry.property}-${index}`}>
-                <header className="result-title">
-                  {entry.word}
-                  {entry.property ? ` ${entry.property}` : ''}
-                </header>
-                <div
-                  className="result-body"
-                  // Parser sanitizes Etymonline body HTML before it reaches this render point.
-                  dangerouslySetInnerHTML={{ __html: entry.html }}
-                />
-              </section>
-            ))}
+            <div
+              // Parser sanitizes Etymonline body HTML before it reaches this render point.
+              dangerouslySetInnerHTML={{ __html: renderEtymologyEntries(entries) }}
+            />
             {sourceUrl && (
               <a className="source" href={sourceUrl} target="_blank" rel="noreferrer">
                 Source

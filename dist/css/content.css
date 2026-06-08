@@ -122,6 +122,7 @@ etymology-lookup-panel .etymology-entry-content p:last-child {
 }
 
 etymology-lookup-panel .etymology-entry-content a {
+  background: transparent;
   color: #A63951;
   text-decoration: none;
 }
@@ -145,13 +146,14 @@ etymology-lookup-panel .etymology-entry-content blockquote p:last-child {
 
 etymology-lookup-panel .etymology-entry-content i,
 etymology-lookup-panel .etymology-entry-content em {
-  background: #f2e5c7;
+  background: transparent;
   color: inherit;
   font-style: italic;
 }
 
 etymology-lookup-panel .etymology-entry-content b,
 etymology-lookup-panel .etymology-entry-content strong {
+  background: transparent;
   color: inherit;
   font-weight: 700;
 }

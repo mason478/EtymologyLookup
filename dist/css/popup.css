@@ -171,38 +171,39 @@ body {
   padding: 14px;
 }
 
-.result-entry + .result-entry {
+.result-card .etymology-entry + .etymology-entry {
   border-top: 1px solid #eadcc0;
   margin-top: 14px;
   padding-top: 12px;
 }
 
-.result-title {
+.result-card .etymology-entry-title {
   color: #3b2b18;
   font-size: 17px;
   font-weight: 700;
   margin-bottom: 8px;
 }
 
-.result-body {
+.result-card .etymology-entry-content {
   font-size: 14px;
   line-height: 1.55;
 }
 
-.result-body p {
+.result-card .etymology-entry-content p {
   margin: 0 0 10px;
 }
 
-.result-body p:last-child {
+.result-card .etymology-entry-content p:last-child {
   margin-bottom: 0;
 }
 
-.result-body a {
+.result-card .etymology-entry-content a {
+  background: transparent;
   color: #A63951;
   text-decoration: none;
 }
 
-.result-body blockquote {
+.result-card .etymology-entry-content blockquote {
   border-left: 4px solid #e8dcc4;
   color: #7c776f;
   font-size: 13px;
@@ -211,18 +212,23 @@ body {
   padding: 2px 0 2px 14px;
 }
 
-.result-body blockquote p {
+.result-card .etymology-entry-content blockquote p {
   margin-bottom: 8px;
 }
 
-.result-body blockquote p:last-child {
+.result-card .etymology-entry-content blockquote p:last-child {
   margin-bottom: 0;
 }
 
-.result-body i,
-.result-body em {
-  background: #f2e5c7;
+.result-card .etymology-entry-content i,
+.result-card .etymology-entry-content em {
+  background: transparent;
   font-style: italic;
+}
+
+.result-card .etymology-entry-content b,
+.result-card .etymology-entry-content strong {
+  background: transparent;
 }
 
 .source {
