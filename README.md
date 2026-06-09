@@ -1,5 +1,7 @@
 # Etymology Lookup
 
+[![CI](https://github.com/mason478/Etymology/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mason478/Etymology/actions/workflows/ci.yml)
+
 A Chrome extension for quickly looking up word origins from Etymonline.
 
 Built with React, TypeScript, and Webpack, and inspired by [Etymonline Extension](https://chromewebstore.google.com/detail/etymonline/giehjnnlopapngdjbjjgddpaagoimmgl).
