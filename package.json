@@ -5,6 +5,7 @@
   "description": "A minimal Chrome extension for quick etymology lookup.",
   "scripts": {
     "build": "webpack --mode=production --config webpack.config.js",
+    "release": "node scripts/release.js",
     "dev": "webpack --mode=development --watch --config webpack.config.js",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
